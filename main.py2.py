@@ -25,7 +25,25 @@ keywords = [
     "login",
     "otp",
     "payment",
-    "winner"
+    "winner",
+    "alert",
+    "congratulations",
+    "reward",
+    "gift",
+    "limited",
+    "offer",
+    "claim",
+    "free",
+    "expired",
+    "security",
+    "update",
+    "confirm",
+    "invoice",
+    "refund",
+    "reset",
+    "important",
+    "immediately",
+    "action required"
 ]
 
 count = 0
@@ -53,6 +71,14 @@ if "http://" in email or "https://" in email or "bit.ly" in email or "tinyurl" i
     print("⚠ Suspicious link detected!")
     link_found = True
     reasons.append("Contains a suspicious link")
+    # Check for urgent language
+urgent_words = ["urgent", "immediately", "action required", "expired"]
+
+for word in urgent_words:
+    if word in email.lower():
+        print(f"⚠ Urgent language detected: {word}")
+        reasons.append(f"Uses urgent language: {word}")
+        count += 1
 
 # Check too many exclamation marks
 if email.count("!") >= 3:
