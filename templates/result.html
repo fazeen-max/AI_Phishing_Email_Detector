@@ -23,7 +23,13 @@
 {% endif %}
 
 <h2>AI Confidence Score: {{ score }}%</h2>
+<h3>Analysis Report</h3>
 
+<ul>
+{% for reason in reasons %}
+    <li>{{ reason }}</li>
+{% endfor %}
+</ul>
 <br>
 
 <a href="/">⬅ Analyze Another Email</a>
