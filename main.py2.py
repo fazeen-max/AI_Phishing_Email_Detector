@@ -114,6 +114,14 @@ for word in urgent_words:
         print(f"⚠ Urgent language detected: {word}")
         reasons.append(f"Uses urgent language: {word}")
         count += 1
+        # Check for suspicious attachments
+attachments = [".exe", ".zip", ".rar", ".js", ".scr", ".bat"]
+
+for file in attachments:
+    if file in email.lower():
+        print(f"⚠ Suspicious attachment detected: {file}")
+        reasons.append(f"Contains suspicious attachment: {file}")
+        count += 2
 
 # Check too many exclamation marks
 if email.count("!") >= 3:
