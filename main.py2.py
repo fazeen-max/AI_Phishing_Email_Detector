@@ -1,5 +1,14 @@
 print("========== AI Phishing Email Detector ==========")
 sender = input("Enter sender email: ")
+suspicious_domains = [
+    "g00gle",
+    "paypaI",
+    "amaz0n",
+    "micr0soft",
+    "faceb00k",
+    "appIe",
+    "0utlook"
+]
 
 email = input("Please enter the email content to analyze:\n")
 # Check for fake sender names
@@ -14,6 +23,12 @@ for name in trusted_names:
             reasons.append("Possible fake sender using similar-looking characters")
             count += 1
             fake_sender = True
+            # Check suspicious domains
+for domain in suspicious_domains:
+    if domain.lower() in sender.lower():
+        print("⚠ Suspicious domain detected!")
+        reasons.append("Uses a suspicious look-alike domain")
+        count += 2
 
 keywords = [
     "urgent",
