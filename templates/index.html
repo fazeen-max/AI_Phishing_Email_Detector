@@ -2,11 +2,13 @@
 <html>
 <head>
     <title>AI Phishing Email Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+ <div class="container">
+
     <h1>AI Phishing Email Detector</h1>
 <form method="POST">
-
     <label>Sender Email:</label><br>
     <input type="text" name="sender" required><br><br>
 
@@ -19,6 +21,6 @@
     <button type="submit">Analyze Email</button>
 
 </form>
-    
+ </div>   
 </body>
 </html>

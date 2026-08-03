@@ -29,15 +29,11 @@ def home():
         elif score >= 35:
             risk = "MEDIUM"
 
-        return f"""
-        <h1>AI Phishing Detection Result</h1>
-
-        <h2>Risk Level: {risk}</h2>
-
-        <h2>AI Confidence Score: {score}%</h2>
-
-        <a href="/">Scan Another Email</a>
-        """
+        return render_template(
+    "result.html",
+    risk=risk,
+    score=score
+)
 
     return render_template("index.html")
 

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detection Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🛡 AI Phishing Detection Result</h1>
+
+{% if risk == "HIGH" %}
+<h2 style="color:red;">🔴 Risk Level: {{ risk }}</h2>
+
+{% elif risk == "MEDIUM" %}
+<h2 style="color:orange;">🟡 Risk Level: {{ risk }}</h2>
+
+{% else %}
+<h2 style="color:green;">🟢 Risk Level: {{ risk }}</h2>
+
+{% endif %}
+
+<h2>AI Confidence Score: {{ score }}%</h2>
+
+<br>
+
+<a href="/">⬅ Analyze Another Email</a>
+
+</div>
+
+</body>
+</html>
