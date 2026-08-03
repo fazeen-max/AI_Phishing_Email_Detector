@@ -1,6 +1,19 @@
 print("========== AI Phishing Email Detector ==========")
+sender = input("Enter sender email: ")
 
 email = input("Please enter the email content to analyze:\n")
+# Check for fake sender names
+fake_sender = False
+
+trusted_names = ["fazeennadeem", "google", "paypal", "microsoft", "amazon", "bank"]
+
+for name in trusted_names:
+    if name in email.lower():
+        if "0" in email or "1" in email or "@" in email:
+            print("⚠ Possible fake sender detected!")
+            reasons.append("Possible fake sender using similar-looking characters")
+            count += 1
+            fake_sender = True
 
 keywords = [
     "urgent",
@@ -19,8 +32,14 @@ count = 0
 link_found = False
 exclamation_found = False
 reasons=[]
+suspicious_sender = False
 
 print("\n----- Scanning Email -----")
+# Check sender email
+if "0" in sender or sender.count("-") >= 2:
+    print("⚠ Suspicious sender email detected!")
+    suspicious_sender = True
+    reasons.append("Suspicious sender email pattern detected")
 
 # Check suspicious keywords
 for word in keywords:
