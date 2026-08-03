@@ -11,7 +11,9 @@ suspicious_domains = [
 ]
 
 email = input("Please enter the email content to analyze:\n")
-# Check for fake sender names
+count = 0
+reasons = []
+# Check for fake sender namess
 fake_sender = False
 
 trusted_names = ["fazeennadeem", "google", "paypal", "microsoft", "amazon", "bank"]
@@ -60,6 +62,24 @@ keywords = [
     "immediately",
     "action required"
 ]
+# Check for sensitive information requests
+sensitive_info = [
+    "password",
+    "otp",
+    "pin",
+    "cvv",
+    "credit card",
+    "debit card",
+    "bank account",
+    "security code",
+    "ssn"
+]
+
+for item in sensitive_info:
+    if item in email.lower():
+        print(f"⚠ Requests sensitive information: {item}")
+        reasons.append(f"Requests sensitive information: {item}")
+        count += 2
 
 count = 0
 link_found = False
