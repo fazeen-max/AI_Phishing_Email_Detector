@@ -12,6 +12,7 @@ suspicious_domains = [
 
 email = input("Please enter the email content to analyze:\n")
 count = 0
+score = 0
 reasons = []
 # Check for fake sender namess
 fake_sender = False
@@ -24,6 +25,7 @@ for name in trusted_names:
             print("⚠ Possible fake sender detected!")
             reasons.append("Possible fake sender using similar-looking characters")
             count += 1
+            score += 1
             fake_sender = True
             # Check suspicious domains
 for domain in suspicious_domains:
@@ -80,6 +82,7 @@ for item in sensitive_info:
         print(f"⚠ Requests sensitive information: {item}")
         reasons.append(f"Requests sensitive information: {item}")
         count += 2
+        score += 15
 
 count = 0
 link_found = False
@@ -100,6 +103,7 @@ for word in keywords:
         print(f"⚠ Suspicious keyword found: {word}")
         reasons.append(f"Suspicious keyword: {word}")
         count += 1
+        score += 10
 
 # Check suspicious links
 if "http://" in email or "https://" in email or "bit.ly" in email or "tinyurl" in email:
@@ -114,6 +118,7 @@ for word in urgent_words:
         print(f"⚠ Urgent language detected: {word}")
         reasons.append(f"Uses urgent language: {word}")
         count += 1
+        score += 10
         # Check for suspicious attachments
 attachments = [".exe", ".zip", ".rar", ".js", ".scr", ".bat"]
 
@@ -122,6 +127,7 @@ for file in attachments:
         print(f"⚠ Suspicious attachment detected: {file}")
         reasons.append(f"Contains suspicious attachment: {file}")
         count += 2
+        score += 20
 
 # Check too many exclamation marks
 if email.count("!") >= 3:
@@ -129,6 +135,10 @@ if email.count("!") >= 3:
     exclamation_found = True
     reasons.append("Uses too many exclamation marks")
 print("\n========== SECURITY REPORT ==========")
+if score > 100:
+    score = 100
+
+print(f"AI Confidence Score: {score}%")
 
 
 if count >= 5 or (link_found and count >= 2):
