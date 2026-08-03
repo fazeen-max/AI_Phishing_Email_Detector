@@ -23,6 +23,14 @@
 {% endif %}
 
 <h2>AI Confidence Score: {{ score }}%</h2>
+
+<div style="width:100%; background:#ddd; border-radius:10px;">
+    <div style="width: {{ score }}%; background:#0b5ed7; color:white; padding:10px; border-radius:10px; text-align:center;">
+        {{ score }}%
+    </div>
+</div>
+
+<br>
 <h3>Analysis Report</h3>
 
 <ul>
