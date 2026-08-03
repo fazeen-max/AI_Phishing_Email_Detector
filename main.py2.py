@@ -1,5 +1,28 @@
-print("========== AI Phishing Email Detector ==========")
+print("========== AI PHISHING EMAIL DETECTOR ==========")
+
+# User Input
 sender = input("Enter sender email: ")
+subject = input("Enter email subject: ")
+email = input("Enter email content:\n")
+
+# Variables
+count = 0
+score = 0
+reasons = []
+
+link_found = False
+fake_sender = False
+exclamation_found = False
+
+# Lists
+trusted_names = [
+    "google",
+    "paypal",
+    "amazon",
+    "microsoft",
+    "bank"
+]
+
 suspicious_domains = [
     "g00gle",
     "paypaI",
@@ -10,29 +33,17 @@ suspicious_domains = [
     "0utlook"
 ]
 
-email = input("Please enter the email content to analyze:\n")
-count = 0
-score = 0
-reasons = []
-# Check for fake sender namess
-fake_sender = False
-
-trusted_names = ["fazeennadeem", "google", "paypal", "microsoft", "amazon", "bank"]
-
-for name in trusted_names:
-    if name in email.lower():
-        if "0" in email or "1" in email or "@" in email:
-            print("⚠ Possible fake sender detected!")
-            reasons.append("Possible fake sender using similar-looking characters")
-            count += 1
-            score += 1
-            fake_sender = True
-            # Check suspicious domains
-for domain in suspicious_domains:
-    if domain.lower() in sender.lower():
-        print("⚠ Suspicious domain detected!")
-        reasons.append("Uses a suspicious look-alike domain")
-        count += 2
+suspicious_subjects = [
+    "urgent",
+    "verify",
+    "congratulations",
+    "won",
+    "security alert",
+    "action required",
+    "limited time",
+    "claim reward",
+    "account suspended"
+]
 
 keywords = [
     "urgent",
@@ -46,7 +57,6 @@ keywords = [
     "payment",
     "winner",
     "alert",
-    "congratulations",
     "reward",
     "gift",
     "limited",
@@ -64,7 +74,7 @@ keywords = [
     "immediately",
     "action required"
 ]
-# Check for sensitive information requests
+
 sensitive_info = [
     "password",
     "otp",
@@ -77,84 +87,138 @@ sensitive_info = [
     "ssn"
 ]
 
-for item in sensitive_info:
-    if item in email.lower():
-        print(f"⚠ Requests sensitive information: {item}")
-        reasons.append(f"Requests sensitive information: {item}")
+attachments = [
+    ".exe",
+    ".zip",
+    ".rar",
+    ".js",
+    ".scr",
+    ".bat"
+]
+
+urgent_words = [
+    "urgent",
+    "immediately",
+    "action required",
+    "expired"
+]
+
+print("\n----- Scanning Email -----")
+
+# Fake sender
+for name in trusted_names:
+    if name in email.lower():
+        if "0" in email or "1" in email or "@" in email:
+            print("⚠ Possible fake sender detected!")
+            reasons.append("Possible fake sender")
+            count += 1
+            score += 10
+            fake_sender = True
+
+# Suspicious domain
+for domain in suspicious_domains:
+    if domain.lower() in sender.lower():
+        print("⚠ Suspicious domain detected!")
+        reasons.append("Suspicious look-alike domain")
         count += 2
         score += 15
 
-count = 0
-link_found = False
-exclamation_found = False
-reasons=[]
-suspicious_sender = False
-
-print("\n----- Scanning Email -----")
-# Check sender email
-if "0" in sender or sender.count("-") >= 2:
-    print("⚠ Suspicious sender email detected!")
-    suspicious_sender = True
-    reasons.append("Suspicious sender email pattern detected")
-
-# Check suspicious keywords
-for word in keywords:
-    if word.lower() in email.lower():
-        print(f"⚠ Suspicious keyword found: {word}")
-        reasons.append(f"Suspicious keyword: {word}")
-        count += 1
+# Subject check
+for item in suspicious_subjects:
+    if item in subject.lower():
+        print(f"⚠ Suspicious subject: {item}")
+        reasons.append(f"Subject contains '{item}'")
+        count += 2
         score += 10
 
-# Check suspicious links
-if "http://" in email or "https://" in email or "bit.ly" in email or "tinyurl" in email:
-    print("⚠ Suspicious link detected!")
-    link_found = True
-    reasons.append("Contains a suspicious link")
-    # Check for urgent language
-urgent_words = ["urgent", "immediately", "action required", "expired"]
+# Keywords
+for word in keywords:
+    if word in email.lower():
+        print(f"⚠ Suspicious keyword: {word}")
+        reasons.append(f"Keyword: {word}")
+        count += 1
+        score += 5
 
+# Sensitive information
+for item in sensitive_info:
+    if item in email.lower():
+        print(f"⚠ Sensitive information requested: {item}")
+        reasons.append(f"Sensitive info: {item}")
+        count += 2
+        score += 15
+
+# Suspicious links
+if ("http://" in email.lower()
+        or "https://" in email.lower()
+        or "bit.ly" in email.lower()
+        or "tinyurl" in email.lower()):
+    print("⚠ Suspicious link detected!")
+    reasons.append("Contains suspicious link")
+    count += 2
+    score += 20
+    link_found = True
+
+# Urgent language
 for word in urgent_words:
     if word in email.lower():
-        print(f"⚠ Urgent language detected: {word}")
-        reasons.append(f"Uses urgent language: {word}")
+        print(f"⚠ Urgent language: {word}")
+        reasons.append(f"Urgent language: {word}")
         count += 1
         score += 10
-        # Check for suspicious attachments
-attachments = [".exe", ".zip", ".rar", ".js", ".scr", ".bat"]
 
+# Attachments
 for file in attachments:
     if file in email.lower():
-        print(f"⚠ Suspicious attachment detected: {file}")
-        reasons.append(f"Contains suspicious attachment: {file}")
+        print(f"⚠ Suspicious attachment: {file}")
+        reasons.append(f"Attachment: {file}")
         count += 2
-        score += 20
+        score += 15
 
-# Check too many exclamation marks
+# Exclamation marks
 if email.count("!") >= 3:
-    print("⚠ Too many exclamation marks detected!")
-    exclamation_found = True
-    reasons.append("Uses too many exclamation marks")
-print("\n========== SECURITY REPORT ==========")
+    print("⚠ Too many exclamation marks!")
+    reasons.append("Too many exclamation marks")
+    count += 1
+    score += 5
+    # ---------------- SECURITY REPORT ----------------
+
 if score > 100:
     score = 100
 
+print("\n========== SECURITY REPORT ==========")
+
 print(f"AI Confidence Score: {score}%")
 
-
-if count >= 5 or (link_found and count >= 2):
-    print("\n🔴 Risk Level: HIGH")
-elif count >= 2:
-    print("\n🟡 Risk Level: MEDIUM")
+if score >= 70:
+    print("🔴 Risk Level: HIGH")
+elif score >= 35:
+    print("🟡 Risk Level: MEDIUM")
 else:
-    print("\n🟢 Risk Level: LOW")
+    print("🟢 Risk Level: LOW")
 
-print("====================================")
 print("\n========== AI ANALYSIS REPORT ==========")
 
-if reasons:
+if len(reasons) == 0:
+    print("✅ No suspicious indicators found.")
+else:
     for reason in reasons:
         print("•", reason)
-else:
-    print("No suspicious indicators found.")
 
-print("========================================")
+print("======================================")
+
+print("\n🛡 SECURITY TIPS")
+
+if score >= 70:
+    print("❌ Do NOT click any links.")
+    print("❌ Do NOT download attachments.")
+    print("❌ Never share your password or OTP.")
+    print("✅ Verify the sender before replying.")
+elif score >= 35:
+    print("⚠ Be careful.")
+    print("⚠ Verify the sender before taking action.")
+    print("⚠ Avoid clicking unknown links.")
+else:
+    print("✅ This email appears relatively safe.")
+    print("✅ Stay alert for future phishing attempts.")
+
+print("\n========== Scan Completed ==========")
