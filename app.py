@@ -40,14 +40,26 @@ def home():
             risk = "HIGH"
         elif score >= 35:
             risk = "MEDIUM"
+            recommendation = ""
+
+        if risk == "HIGH":
+            recommendation = "❌ Do NOT click any links or download attachments. This email is very likely a phishing attempt."
+
+        elif risk == "MEDIUM":
+            recommendation = "⚠ Be cautious. Verify the sender and any links before responding."
+
+        else:
+            recommendation = "✅ This email appears relatively safe, but always verify the sender before sharing sensitive information."
 
         return render_template(
-            "result.html",
-            risk=risk,
-            reasons=reasons,
-            score=score
-        )
-
+    "result.html",
+    risk=risk,
+    reasons=reasons,
+    score=score,
+    recommendation=recommendation
+)
+   
+        
     return render_template("index.html")
 
 

@@ -31,6 +31,11 @@
     <h2>Detected Issues</h2>
 
     <ul>
+        <h2>🛡 AI Security Recommendation</h2>
+
+<div style="background:#eef6ff;padding:15px;border-radius:10px;">
+    {{ recommendation }}
+</div>
         {% for reason in reasons %}
             <li>{{ reason }}</li>
         {% endfor %}
