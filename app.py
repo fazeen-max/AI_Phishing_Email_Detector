@@ -29,12 +29,12 @@ def home():
             score += 30
             reasons.append("⚠ Contains a shortened suspicious link")
 
-        attachments = [".exe", ".zip", ".rar", ".js", ".bat"]
+        attachments = [".exe", ".zip", ".rar", ".js", ".bat", ".scr"]
 
         for file in attachments:
             if file in email.lower():
                 score += 20
-                reasons.append(f"⚠ Dangerous attachment detected: {file}")
+                reasons.append(f"📎 Dangerous attachment detected: {file}")
 
         if score >= 70:
             risk = "HIGH"
@@ -42,11 +42,11 @@ def home():
             risk = "MEDIUM"
 
         return render_template(
-    "result.html",
-    risk=risk,
-    reasons=reasons,
-    score=score
-)
+            "result.html",
+            risk=risk,
+            reasons=reasons,
+            score=score
+        )
 
     return render_template("index.html")
 
