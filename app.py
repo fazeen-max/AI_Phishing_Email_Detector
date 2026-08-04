@@ -9,6 +9,11 @@ def home():
         subject = request.form["subject"]
         email = request.form["email"]
 
+        # Email statistics
+        word_count = len(email.split())
+        link_count = email.lower().count("http")
+        attachment_count = 0
+
         sender_lower = sender.lower()
 
         score = 0
@@ -46,6 +51,7 @@ def home():
 
         for file in attachments:
             if file in email.lower():
+                attachment_count += 1
                 score += 20
                 reasons.append(f"📎 Dangerous attachment detected: {file}")
 
@@ -68,7 +74,10 @@ def home():
             risk=risk,
             reasons=reasons,
             score=score,
-            recommendation=recommendation
+            recommendation=recommendation,
+            word_count=word_count,
+            link_count=link_count,
+            attachment_count=attachment_count
         )
 
     return render_template("index.html")

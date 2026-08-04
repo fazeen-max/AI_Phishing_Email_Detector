@@ -27,6 +27,21 @@
             {{ score }}%
         </div>
     </div>
+    <h2>📊 Email Security Dashboard</h2>
+
+<div style="background:#f8f9fa;padding:20px;border-radius:10px;margin-bottom:20px;">
+
+<p>📄 <strong>Total Words:</strong> {{ word_count }}</p>
+
+<p>🔗 <strong>Links Found:</strong> {{ link_count }}</p>
+
+<p>📎 <strong>Dangerous Attachments:</strong> {{ attachment_count }}</p>
+
+<p>⚠ <strong>Threat Indicators:</strong> {{ reasons|length }}</p>
+
+<p>🎯 <strong>Overall Threat Score:</strong> {{ score }}%</p>
+
+</div>
 
     <h2>Detected Issues</h2>
 
