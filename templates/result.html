@@ -1,46 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Detection Result</title>
+    <title>Analysis Report</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-
 <body>
 
 <div class="container">
 
-<h1>🛡 AI Phishing Detection Result</h1>
+    <h1>🛡 Analysis Report</h1>
 
-{% if risk == "HIGH" %}
-<h2 style="color:red;">🔴 Risk Level: {{ risk }}</h2>
+    <h2>Risk Level:
+        {% if risk == "HIGH" %}
+            <span style="color:red;">🔴 HIGH</span>
+        {% elif risk == "MEDIUM" %}
+            <span style="color:orange;">🟡 MEDIUM</span>
+        {% else %}
+            <span style="color:green;">🟢 LOW</span>
+        {% endif %}
+    </h2>
 
-{% elif risk == "MEDIUM" %}
-<h2 style="color:orange;">🟡 Risk Level: {{ risk }}</h2>
+    <h2>AI Confidence Score</h2>
 
-{% else %}
-<h2 style="color:green;">🟢 Risk Level: {{ risk }}</h2>
-
-{% endif %}
-
-<h2>AI Confidence Score: {{ score }}%</h2>
-
-<div style="width:100%; background:#ddd; border-radius:10px;">
-    <div style="width: {{ score }}%; background:#0b5ed7; color:white; padding:10px; border-radius:10px; text-align:center;">
-        {{ score }}%
+    <div style="width:100%;background:#ddd;border-radius:10px;">
+        <div style="width:{{ score }}%;background:#0d6efd;color:white;padding:10px;border-radius:10px;text-align:center;">
+            {{ score }}%
+        </div>
     </div>
-</div>
 
-<br>
-<h3>Analysis Report</h3>
+    <h2>Detected Issues</h2>
 
-<ul>
-{% for reason in reasons %}
-    <li>{{ reason }}</li>
-{% endfor %}
-</ul>
-<br>
+    <ul>
+        {% for reason in reasons %}
+            <li>{{ reason }}</li>
+        {% endfor %}
+    </ul>
 
-<a href="/">⬅ Analyze Another Email</a>
+    <br>
+
+    <a href="/">
+        <button>🔍 Scan Another Email</button>
+    </a>
 
 </div>
 

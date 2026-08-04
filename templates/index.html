@@ -9,48 +9,26 @@
 
 <div class="container">
 
-    <h1>AI Phishing Email Detector</h1>
+    <h1>🛡 AI Phishing Email Detector</h1>
+
+    <p class="subtitle">
+        Detect phishing emails using AI-powered security analysis.
+    </p>
 
     <form method="POST">
 
-        <label>Sender Email:</label><br>
-        <input type="text" name="sender" value="{{ request.form.get('sender','') }}" required>
-        <br><br>
+        <label>📧 Sender Email</label>
+        <input type="text" name="sender" required>
 
-        <label>Email Subject:</label><br>
-        <input type="text" name="subject" value="{{ request.form.get('subject','') }}" required>
-        <br><br>
+        <label>📝 Email Subject</label>
+        <input type="text" name="subject" required>
 
-        <label>Email Content:</label><br>
-        <textarea name="email" rows="8" cols="50" required>{{ request.form.get('email','') }}</textarea>
-        <br><br>
+        <label>📄 Email Content</label>
+        <textarea name="email" rows="8" required></textarea>
 
-        <button type="submit">Analyze Email</button>
+        <button type="submit">🔍 Analyze Email</button>
 
     </form>
-
-
-    {% if risk %}
-
-    <hr>
-
-    <h2>Analysis Report</h2>
-
-    <p><b>Risk Level:</b> {{ risk }}</p>
-
-    <p><b>AI Score:</b> {{ score }}/100</p>
-
-
-    <h3>Detected Issues:</h3>
-
-    <ul>
-        {% for reason in reasons %}
-        <li>{{ reason }}</li>
-        {% endfor %}
-    </ul>
-
-    {% endif %}
-
 
 </div>
 

@@ -41,7 +41,12 @@ def home():
         elif score >= 35:
             risk = "MEDIUM"
 
-        return render_template("index.html", risk=risk, reasons=reasons, score=score)
+        return render_template(
+    "result.html",
+    risk=risk,
+    reasons=reasons,
+    score=score
+)
 
     return render_template("index.html")
 
