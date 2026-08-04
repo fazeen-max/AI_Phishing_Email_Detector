@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analyzing...</title>
+
+    <style>
+
+body{
+    margin:0;
+    background:#081b3a;
+    color:white;
+    font-family:Arial;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.box{
+    text-align:left;
+    width:500px;
+}
+
+h1{
+    text-align:center;
+    color:#00d4ff;
+}
+
+.loading{
+    width:100%;
+    height:12px;
+    background:#1c3d70;
+    border-radius:20px;
+    overflow:hidden;
+    margin:30px 0;
+}
+
+.bar{
+    height:100%;
+    width:0%;
+    background:#00d4ff;
+    animation:load 3s linear forwards;
+}
+
+@keyframes load{
+    from{width:0%;}
+    to{width:100%;}
+}
+
+.step{
+    margin:12px 0;
+    font-size:18px;
+}
+
+</style>
+
+<script>
+setTimeout(function(){
+    window.location.href="/result";
+},3000);
+</script>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>🛡 AI Security Engine</h1>
+
+<div class="loading">
+<div class="bar"></div>
+</div>
+
+<div class="step">✅ Checking sender...</div>
+<div class="step">✅ Scanning email content...</div>
+<div class="step">✅ Detecting phishing keywords...</div>
+<div class="step">✅ Checking malicious links...</div>
+<div class="step">✅ Calculating AI confidence...</div>
+<div class="step">✅ Generating security report...</div>
+
+</div>
+
+</body>
+</html>

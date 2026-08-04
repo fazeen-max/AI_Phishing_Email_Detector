@@ -22,8 +22,8 @@
 
     <h2>AI Confidence Score</h2>
 
-    <div style="width:100%;background:#ddd;border-radius:10px;">
-        <div style="width:{{ score }}%;background:#0d6efd;color:white;padding:10px;border-radius:10px;text-align:center;">
+    <div style="width:100%; background:#ddd; border-radius:10px;">
+        <div style="width:{{ score }}%; background:#0d6efd; color:white; padding:10px; border-radius:10px; text-align:center;">
             {{ score }}%
         </div>
     </div>
@@ -31,15 +31,16 @@
     <h2>Detected Issues</h2>
 
     <ul>
-        <h2>🛡 AI Security Recommendation</h2>
-
-<div style="background:#eef6ff;padding:15px;border-radius:10px;">
-    {{ recommendation }}
-</div>
         {% for reason in reasons %}
             <li>{{ reason }}</li>
         {% endfor %}
     </ul>
+
+    <h2>🛡 AI Security Recommendation</h2>
+
+    <div style="background:#eef6ff; padding:15px; border-radius:10px;">
+        {{ recommendation }}
+    </div>
 
     <br>
 
