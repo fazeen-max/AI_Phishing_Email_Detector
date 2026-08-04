@@ -41,6 +41,25 @@
     <div style="background:#eef6ff; padding:15px; border-radius:10px;">
         {{ recommendation }}
     </div>
+    <h2>🤖 AI Decision Summary</h2>
+
+<div style="background:#f8f9fa; padding:20px; border-radius:10px; border-left:6px solid #0d6efd;">
+
+    <p><strong>Why was this email classified as {{ risk }} risk?</strong></p>
+
+    <p>
+        Our AI analyzed the sender, subject, email content, links, and attachments.
+        Based on the detected security indicators shown above, this email was classified as
+        <strong>{{ risk }}</strong> risk with an AI confidence score of
+        <strong>{{ score }}%</strong>.
+    </p>
+
+    <p>
+        Always verify the sender's identity before clicking links,
+        downloading attachments, or sharing personal information.
+    </p>
+
+</div>
 
     <br>
 
