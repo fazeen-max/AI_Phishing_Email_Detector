@@ -13,21 +13,33 @@ def home():
 
         # Email statistics
         word_count = len(email.split())
-        link_count = email.lower().count("http")
+        link_count = len(re.findall(r'https?://\S+', email))
         attachment_count = 0
 
-        # Detect URLs
+        # URL Detection
         urls = re.findall(r'https?://\S+', email)
+
+        trusted_domains = [
+            "google.com",
+            "microsoft.com",
+            "github.com",
+            "openai.com",
+            "amazon.com",
+            "paypal.com",
+            "apple.com",
+            "linkedin.com",
+            "facebook.com"
+        ]
 
         url_results = []
 
         for url in urls:
-            if "bit.ly" in url:
+            if "bit.ly" in url or "tinyurl.com" in url or "t.co" in url:
                 url_results.append((url, "🔴 High Risk - Shortened URL"))
-            elif "google.com" in url:
+            elif any(domain in url for domain in trusted_domains):
                 url_results.append((url, "🟢 Trusted Domain"))
             else:
-                url_results.append((url, "🟡 Unknown Domain"))
+                url_results.append((url, "🟡 Unknown or Suspicious Domain"))
 
         sender_lower = sender.lower()
 
@@ -36,11 +48,19 @@ def home():
         reasons = []
 
         # Detect suspicious senders
-        if "gmail.com" in sender_lower or "yahoo.com" in sender_lower or "hotmail.com" in sender_lower:
+        if (
+            "gmail.com" in sender_lower
+            or "yahoo.com" in sender_lower
+            or "hotmail.com" in sender_lower
+        ):
             score += 20
             reasons.append("⚠ Uses a free email provider")
 
-        if "paypal" in sender_lower or "amazon" in sender_lower or "bank" in sender_lower:
+        if (
+            "paypal" in sender_lower
+            or "amazon" in sender_lower
+            or "bank" in sender_lower
+        ):
             score += 20
             reasons.append("⚠ Sender impersonates a trusted organization")
 
@@ -78,11 +98,19 @@ def home():
 
         # Security recommendation
         if risk == "HIGH":
-            recommendation = "❌ Do NOT click any links or download attachments. This email is very likely a phishing attempt."
+            recommendation = (
+                "❌ Do NOT click any links or download attachments. "
+                "This email is very likely a phishing attempt."
+            )
         elif risk == "MEDIUM":
-            recommendation = "⚠ Be cautious. Verify the sender and any links before responding."
+            recommendation = (
+                "⚠ Be cautious. Verify the sender and any links before responding."
+            )
         else:
-            recommendation = "✅ This email appears relatively safe, but always verify the sender before sharing sensitive information."
+            recommendation = (
+                "✅ This email appears relatively safe, but always verify the sender "
+                "before sharing sensitive information."
+            )
 
         return render_template(
             "result.html",
@@ -93,7 +121,7 @@ def home():
             word_count=word_count,
             link_count=link_count,
             attachment_count=attachment_count,
-            url_results=url_results
+            url_results=url_results,
         )
 
     return render_template("index.html")
