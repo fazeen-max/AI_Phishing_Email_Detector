@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file
 import re
+from pdf_report import generate_report
 
 app = Flask(__name__)
 
@@ -172,6 +173,33 @@ def home():
         )
 
     return render_template("index.html")
+@app.route("/download-report")
+def download_report():
+
+    filename = "AI_Phishing_Report.pdf"
+
+    generate_report(
+        filename=filename,
+        risk="HIGH",
+        score=85,
+        reasons=[
+            "Requests your password",
+            "Contains shortened URL",
+            "Dangerous attachment detected"
+        ],
+        recommendation="Do NOT click links or download attachments.",
+        word_count=120,
+        link_count=2,
+        attachment_count=1,
+        threat_count=4,
+        header_results=[
+            "❌ SPF Authentication Failed",
+            "❌ DKIM Authentication Failed",
+            "❌ DMARC Authentication Failed"
+        ]
+    )
+
+    return send_file(filename, as_attachment=True)
 
 
 if __name__ == "__main__":
