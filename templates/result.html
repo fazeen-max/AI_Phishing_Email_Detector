@@ -128,6 +128,25 @@
     <div style="background:#eef6ff; padding:15px; border-radius:10px;">
         {{ recommendation }}
     </div>
+    <h2>📨 Email Header Analysis</h2>
+
+{% if header_results %}
+
+<div style="background:#f4f9ff; padding:15px; border-radius:10px; margin-bottom:20px;">
+
+    <ul>
+    {% for result in header_results %}
+        <li>{{ result }}</li>
+    {% endfor %}
+    </ul>
+
+</div>
+
+{% else %}
+
+<p>No email header was provided.</p>
+
+{% endif %}
     <h2>🤖 AI Decision Summary</h2>
 
 <div style="background:#f8f9fa; padding:20px; border-radius:10px; border-left:6px solid #0d6efd;">

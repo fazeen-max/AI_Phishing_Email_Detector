@@ -5,18 +5,24 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
 def home():
+
     if request.method == "POST":
 
         sender = request.form["sender"]
         subject = request.form["subject"]
         email = request.form["email"]
+        header = request.form.get("header", "")
 
-        # Email statistics
+        # -----------------------------
+        # Email Statistics
+        # -----------------------------
         word_count = len(email.split())
         link_count = len(re.findall(r'https?://\S+', email))
         attachment_count = 0
 
+        # -----------------------------
         # URL Detection
+        # -----------------------------
         urls = re.findall(r'https?://\S+', email)
 
         trusted_domains = [
@@ -30,7 +36,6 @@ def home():
             "linkedin.com",
             "facebook.com"
         ]
-
         url_results = []
 
         for url in urls:
@@ -48,7 +53,39 @@ def home():
         reasons = []
         threat_count = 0
 
-        # Detect suspicious senders
+        # -----------------------------
+        # Email Header Analysis
+        # -----------------------------
+        header_results = []
+
+        if header:
+
+            if "spf: fail" in header.lower():
+                header_results.append("❌ SPF Authentication Failed")
+                score += 15
+                threat_count += 1
+            elif "spf: pass" in header.lower():
+                header_results.append("✅ SPF Passed")
+
+            if "dkim: fail" in header.lower():
+                header_results.append("❌ DKIM Authentication Failed")
+                score += 15
+                threat_count += 1
+            elif "dkim: pass" in header.lower():
+                header_results.append("✅ DKIM Passed")
+
+            if "dmarc: fail" in header.lower():
+                header_results.append("❌ DMARC Authentication Failed")
+                score += 15
+                threat_count += 1
+            elif "dmarc: pass" in header.lower():
+                header_results.append("✅ DMARC Passed")
+
+            ip_match = re.search(r"\b(?:\d{1,3}\.){3}\d{1,3}\b", header)
+
+            if ip_match:
+                header_results.append(f"🌍 Sender IP: {ip_match.group()}")
+                # Detect suspicious senders
         if (
             "gmail.com" in sender_lower
             or "yahoo.com" in sender_lower
@@ -131,6 +168,7 @@ def home():
             attachment_count=attachment_count,
             url_results=url_results,
             threat_count=threat_count,
+            header_results=header_results,
         )
 
     return render_template("index.html")
