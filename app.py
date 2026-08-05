@@ -46,6 +46,7 @@ def home():
         score = 0
         risk = "LOW"
         reasons = []
+        threat_count = 0
 
         # Detect suspicious senders
         if (
@@ -55,6 +56,7 @@ def home():
         ):
             score += 20
             reasons.append("⚠ Uses a free email provider")
+            threat_count += 1
 
         if (
             "paypal" in sender_lower
@@ -63,23 +65,28 @@ def home():
         ):
             score += 20
             reasons.append("⚠ Sender impersonates a trusted organization")
+            threat_count += 1
 
         # Detect phishing keywords
         if "password" in email.lower():
             score += 25
             reasons.append("⚠ Requests your password")
+            threat_count += 1
 
         if "otp" in email.lower():
             score += 25
             reasons.append("⚠ Requests OTP")
+            threat_count += 1
 
         if "urgent" in subject.lower():
             score += 20
             reasons.append("⚠ Uses urgent language")
+            threat_count += 1
 
         if "bit.ly" in email.lower():
             score += 30
             reasons.append("⚠ Contains a shortened suspicious link")
+            threat_count += 1
 
         # Detect dangerous attachments
         attachments = [".exe", ".zip", ".rar", ".js", ".bat", ".scr"]
@@ -89,6 +96,7 @@ def home():
                 attachment_count += 1
                 score += 20
                 reasons.append(f"📎 Dangerous attachment detected: {file}")
+                threat_count += 1
 
         # Decide risk level
         if score >= 70:
@@ -122,6 +130,7 @@ def home():
             link_count=link_count,
             attachment_count=attachment_count,
             url_results=url_results,
+            threat_count=threat_count,
         )
 
     return render_template("index.html")

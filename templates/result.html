@@ -89,6 +89,31 @@
 <p>No URLs detected in this email.</p>
 
 {% endif %}
+<h2>📊 Email Analytics Dashboard</h2>
+
+<div style="display:flex;flex-wrap:wrap;gap:15px;margin-bottom:20px;">
+
+    <div style="flex:1;min-width:150px;background:#e3f2fd;padding:15px;border-radius:10px;text-align:center;">
+        <h3>📄 Words</h3>
+        <h2>{{ word_count }}</h2>
+    </div>
+
+    <div style="flex:1;min-width:150px;background:#e8f5e9;padding:15px;border-radius:10px;text-align:center;">
+        <h3>🔗 Links</h3>
+        <h2>{{ link_count }}</h2>
+    </div>
+
+    <div style="flex:1;min-width:150px;background:#fff3cd;padding:15px;border-radius:10px;text-align:center;">
+        <h3>📎 Attachments</h3>
+        <h2>{{ attachment_count }}</h2>
+    </div>
+
+    <div style="flex:1;min-width:150px;background:#f8d7da;padding:15px;border-radius:10px;text-align:center;">
+        <h3>⚠ Threats</h3>
+        <h2>{{ threat_count }}</h2>
+    </div>
+
+</div>
 
     <h2>Detected Issues</h2>
 
