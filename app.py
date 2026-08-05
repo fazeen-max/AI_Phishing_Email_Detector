@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request
+import re
 
 app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
+
         sender = request.form["sender"]
         subject = request.form["subject"]
         email = request.form["email"]
@@ -13,6 +15,19 @@ def home():
         word_count = len(email.split())
         link_count = email.lower().count("http")
         attachment_count = 0
+
+        # Detect URLs
+        urls = re.findall(r'https?://\S+', email)
+
+        url_results = []
+
+        for url in urls:
+            if "bit.ly" in url:
+                url_results.append((url, "🔴 High Risk - Shortened URL"))
+            elif "google.com" in url:
+                url_results.append((url, "🟢 Trusted Domain"))
+            else:
+                url_results.append((url, "🟡 Unknown Domain"))
 
         sender_lower = sender.lower()
 
@@ -77,7 +92,8 @@ def home():
             recommendation=recommendation,
             word_count=word_count,
             link_count=link_count,
-            attachment_count=attachment_count
+            attachment_count=attachment_count,
+            url_results=url_results
         )
 
     return render_template("index.html")

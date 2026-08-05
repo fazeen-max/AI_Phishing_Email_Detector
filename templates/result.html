@@ -42,6 +42,28 @@
 <p>🎯 <strong>Overall Threat Score:</strong> {{ score }}%</p>
 
 </div>
+<h2>🌐 URL Reputation Checker</h2>
+
+{% if url_results %}
+
+<div style="background:#f8f9fa;padding:15px;border-radius:10px;margin-bottom:20px;">
+
+    <ul>
+    {% for url, status in url_results %}
+        <li>
+            <strong>{{ url }}</strong><br>
+            {{ status }}
+        </li>
+    {% endfor %}
+    </ul>
+
+</div>
+
+{% else %}
+
+<p>No URLs detected in this email.</p>
+
+{% endif %}
 
     <h2>Detected Issues</h2>
 
