@@ -27,6 +27,31 @@
             {{ score }}%
         </div>
     </div>
+    <h2>🚨 Email Threat Meter</h2>
+
+<div style="background:#ddd; border-radius:30px; overflow:hidden; height:35px; margin-bottom:20px;">
+
+    {% if score >= 70 %}
+
+    <div style="width:{{ score }}%; background:#dc3545; height:35px; color:white; text-align:center; line-height:35px; font-weight:bold;">
+        🔴 CRITICAL ({{ score }}%)
+    </div>
+
+    {% elif score >= 35 %}
+
+    <div style="width:{{ score }}%; background:#ffc107; height:35px; color:black; text-align:center; line-height:35px; font-weight:bold;">
+        🟡 WARNING ({{ score }}%)
+    </div>
+
+    {% else %}
+
+    <div style="width:{{ score }}%; background:#198754; height:35px; color:white; text-align:center; line-height:35px; font-weight:bold;">
+        🟢 SAFE ({{ score }}%)
+    </div>
+
+    {% endif %}
+
+</div>
     <h2>📊 Email Security Dashboard</h2>
 
 <div style="background:#f8f9fa;padding:20px;border-radius:10px;margin-bottom:20px;">
