@@ -124,6 +124,41 @@
 </div>
 
     <br>
+    <h2>💡 AI Phishing Safety Tips</h2>
+
+<div style="background:#f8f9fa; padding:15px; border-radius:10px; margin-bottom:20px;">
+
+{% if risk == "HIGH" %}
+
+<ul>
+    <li>🚫 Never click suspicious links.</li>
+    <li>🔒 Never share your password or OTP.</li>
+    <li>📎 Do not open unknown attachments.</li>
+    <li>📧 Verify the sender through an official website.</li>
+    <li>🛡 Enable Two-Factor Authentication (2FA).</li>
+</ul>
+
+{% elif risk == "MEDIUM" %}
+
+<ul>
+    <li>⚠ Double-check the sender's email address.</li>
+    <li>🔍 Hover over links before clicking them.</li>
+    <li>📞 Contact the organization if unsure.</li>
+    <li>🔐 Never enter sensitive information without verification.</li>
+</ul>
+
+{% else %}
+
+<ul>
+    <li>✅ The email appears relatively safe.</li>
+    <li>🔒 Stay cautious when sharing personal information.</li>
+    <li>🛡 Keep your antivirus software updated.</li>
+    <li>📧 Continue verifying unexpected emails.</li>
+</ul>
+
+{% endif %}
+
+</div>
 
     <a href="/">
         <button>🔍 Scan Another Email</button>
