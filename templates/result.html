@@ -158,8 +158,11 @@
     <p>
         Our AI analyzed the sender, subject, email content, links, and attachments.
         Based on the detected security indicators shown above, this email was classified as
-        <strong>{{ risk }}</strong> risk with an AI confidence score of
-        <strong>{{ score }}%</strong>.
+        <span class="risk-badge {{ risk|lower }}">
+    {{ risk }}
+</span>
+risk with an AI confidence score of
+<strong>{{ score }}%</strong>.
     </p>
 
     <p>

@@ -138,3 +138,25 @@ footer{
     border-radius: 20px;
     transition: width 0.6s ease;
 }
+/* ===== Risk Badge ===== */
+
+.risk-badge {
+    color: white;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.risk-badge.low {
+    background-color: #28a745;
+}
+
+.risk-badge.medium {
+    background-color: #ffc107;
+    color: black;
+}
+
+.risk-badge.high {
+    background-color: #dc3545;
+}
