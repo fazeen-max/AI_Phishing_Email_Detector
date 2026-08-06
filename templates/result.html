@@ -65,7 +65,9 @@
 <p>⚠ <strong>Threat Indicators:</strong> {{ reasons|length }}</p>
 
 <p>🎯 <strong>Overall Threat Score:</strong> {{ score }}%</p>
-
+<div class="risk-meter">
+    <div class="risk-fill" style="width: {{ score }}%;"></div>
+</div>
 </div>
 <h2>🌐 URL Reputation Checker</h2>
 
