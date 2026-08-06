@@ -168,12 +168,18 @@ def home():
         # -----------------------------
         # Decide Risk Level
         # -----------------------------
+           # -----------------------------
+# -----------------------------
+        # Decide Risk Level
+        # -----------------------------
         if score >= 70:
             risk = "HIGH"
         elif score >= 35:
             risk = "MEDIUM"
         else:
             risk = "LOW"
+
+        score = min(score, 100)
 
         # -----------------------------
         # AI Recommendation
@@ -192,12 +198,12 @@ def home():
                 "✅ This email appears relatively safe, but always verify the sender "
                 "before sharing sensitive information."
             )
-            
 
         # -----------------------------
         # Show Results
         # -----------------------------
         scan_time = round(time.time() - start_time, 3)
+
         return render_template(
             "result.html",
             risk=risk,
