@@ -19,6 +19,15 @@
             <span style="color:green;">🟢 LOW</span>
         {% endif %}
     </h2>
+    <div class="email-type">
+    {% if risk == "HIGH" %}
+        <span class="badge phishing">🎣 PHISHING EMAIL</span>
+    {% elif risk == "MEDIUM" %}
+        <span class="badge spam">📧 SUSPICIOUS EMAIL</span>
+    {% else %}
+        <span class="badge safe">✅ LEGITIMATE EMAIL</span>
+    {% endif %}
+</div>
 
     <h2>AI Confidence Score</h2>
     <div class="score-circle">

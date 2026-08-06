@@ -185,3 +185,31 @@ footer{
     font-weight: bold;
     color: #0d6efd;
 }
+/* Email Classification Badge */
+
+.email-type{
+    text-align:center;
+    margin:15px 0;
+}
+
+.badge{
+    padding:10px 20px;
+    border-radius:20px;
+    font-weight:bold;
+    color:white;
+    display:inline-block;
+    font-size:16px;
+}
+
+.phishing{
+    background:#dc3545;
+}
+
+.spam{
+    background:#ffc107;
+    color:black;
+}
+
+.safe{
+    background:#198754;
+}
