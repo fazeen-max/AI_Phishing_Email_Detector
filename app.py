@@ -2,9 +2,11 @@ from flask import Flask, render_template, request, send_file
 import re
 import json
 import time
+import csv
 from datetime import datetime
 from pdf_report import generate_report
 app = Flask(__name__)
+latest_report = {}
 def save_history(data):
 
     with open("history.json", "r") as file:
@@ -229,7 +231,16 @@ def home():
             "score": score,
             "threats": threat_count
         })
+        
+
         scan_time = round(time.time() - start_time, 3)
+        latest_report.update({
+            "risk": risk,
+            "score": score,
+            "threats": threat_count,
+            "recommendation": recommendation
+        })
+        
 
         return render_template(
             "result.html",
@@ -258,6 +269,30 @@ def history():
         "history.html",
         scans=scans
     )
+@app.route("/download-csv")
+def download_csv():
+
+    filename = "AI_Phishing_Report.csv"
+
+    with open(filename, "w", newline="", encoding="utf-8") as file:
+
+        writer = csv.writer(file)
+
+        writer.writerow([
+            "Risk",
+            "Score",
+            "Threats",
+            "Recommendation"
+        ])
+
+        writer.writerow([
+    latest_report.get("risk", ""),
+    f"{latest_report.get('score', '')}%",
+    latest_report.get("threats", ""),
+    latest_report.get("recommendation", "")
+])
+
+    return send_file(filename, as_attachment=True)
 @app.route("/download-report")
 def download_report():
 
