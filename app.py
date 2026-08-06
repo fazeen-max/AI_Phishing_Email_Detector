@@ -72,6 +72,7 @@ def home():
         reasons = []
         threat_count = 0
         header_results = []
+        keyword_results = []
         # -----------------------------
         # Email Header Analysis
         # -----------------------------
@@ -152,7 +153,14 @@ def home():
             if keyword in email_lower or keyword in subject_lower:
                 score += points
                 threat_count += 1
-                reasons.append(f"⚠ Suspicious keyword detected: {keyword}")
+
+                reasons.append(
+                    f"⚠ Suspicious keyword detected: {keyword}"
+                )
+
+                keyword_results.append(
+                    (keyword, points, "⚠ Detected")
+                )
                 # -----------------------------
         # Detect Dangerous Attachments
         # -----------------------------
@@ -217,6 +225,7 @@ def home():
             threat_count=threat_count,
             header_results=header_results,
             scan_time=scan_time,
+            keyword_results=keyword_results,
         )
 
     return render_template("index.html")

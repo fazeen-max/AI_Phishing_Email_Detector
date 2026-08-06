@@ -135,6 +135,35 @@
             <li>{{ reason }}</li>
         {% endfor %}
     </ul>
+    <h2>🔍 Suspicious Keyword Analysis</h2>
+
+{% if keyword_results %}
+
+<table class="keyword-table">
+
+    <tr>
+        <th>Keyword</th>
+        <th>Risk Points</th>
+        <th>Status</th>
+    </tr>
+
+    {% for keyword, points, status in keyword_results %}
+
+    <tr>
+        <td>{{ keyword }}</td>
+        <td>{{ points }}</td>
+        <td>{{ status }}</td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% else %}
+
+<p>✅ No suspicious keywords detected.</p>
+
+{% endif %}
 
     <h2>🛡 AI Security Recommendation</h2>
 
