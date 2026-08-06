@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Statistics Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>📊 Live Statistics Dashboard</h1>
+
+    <div class="stats">
+
+        <div class="card">
+            <h2>{{ total }}</h2>
+            <p>Total Emails</p>
+        </div>
+
+        <div class="card">
+            <h2>{{ high }}</h2>
+            <p>🔴 High Risk</p>
+        </div>
+
+        <div class="card">
+            <h2>{{ medium }}</h2>
+            <p>🟡 Medium Risk</p>
+        </div>
+
+        <div class="card">
+            <h2>{{ low }}</h2>
+            <p>🟢 Low Risk</p>
+        </div>
+
+    </div>
+
+    <br>
+
+    <a href="/">⬅ Back to Scanner</a>
+
+</div>
+
+</body>
+</html>

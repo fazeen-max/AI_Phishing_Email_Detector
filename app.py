@@ -7,6 +7,14 @@ from datetime import datetime
 from pdf_report import generate_report
 app = Flask(__name__)
 latest_report = {}
+def load_history():
+
+    try:
+        with open("history.json", "r") as file:
+            return json.load(file)
+
+    except FileNotFoundError:
+        return []
 def save_history(data):
 
     with open("history.json", "r") as file:
@@ -293,6 +301,31 @@ def download_csv():
 ])
 
     return send_file(filename, as_attachment=True)
+@app.route("/dashboard")
+def dashboard():
+
+    history = load_history()
+
+    total = len(history)
+    high = 0
+    medium = 0
+    low = 0
+
+    for scan in history:
+        if scan["risk"] == "HIGH":
+            high += 1
+        elif scan["risk"] == "MEDIUM":
+            medium += 1
+        else:
+            low += 1
+
+    return render_template(
+        "dashboard.html",
+        total=total,
+        high=high,
+        medium=medium,
+        low=low
+    )
 @app.route("/download-report")
 def download_report():
 
