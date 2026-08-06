@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scan History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📋 Scan History</h1>
+
+    {% if scans %}
+
+    <table class="keyword-table">
+
+        <tr>
+            <th>Date & Time</th>
+            <th>Sender</th>
+            <th>Risk</th>
+            <th>Score</th>
+            <th>Threats</th>
+        </tr>
+
+        {% for scan in scans %}
+        
+
+        <tr>
+            <td>{{ scan.time }}</td>
+            <td>{{ scan.sender }}</td>
+            <td>
+
+{% if scan.risk == "HIGH" %}
+
+<span class="risk-high">🔴 HIGH</span>
+
+{% elif scan.risk == "MEDIUM" %}
+
+<span class="risk-medium">🟡 MEDIUM</span>
+
+{% else %}
+
+<span class="risk-low">🟢 LOW</span>
+
+{% endif %}
+
+</td>
+            <td>{{ scan.score }}%</td>
+            <td>{{ scan.threats }}</td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+
+    <p>No scan history available.</p>
+
+    {% endif %}
+
+    <br>
+
+    <button onclick="window.location.href='/'">
+        🔍 Scan Another Email
+    </button>
+
+</div>
+
+</body>
+</html>

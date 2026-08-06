@@ -213,3 +213,48 @@ footer{
 .safe{
     background:#198754;
 }
+/* Scan History Table */
+
+.keyword-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+    background:white;
+}
+
+.keyword-table th{
+    padding:12px;
+    text-align:center;
+    border-bottom:2px solid #ddd;
+}
+
+.keyword-table td{
+    padding:12px;
+    text-align:center;
+    border-bottom:1px solid #ddd;
+}
+/* History Risk Badges */
+
+.risk-high,
+.risk-medium,
+.risk-low {
+    padding:6px 12px;
+    border-radius:20px;
+    font-weight:bold;
+    display:inline-block;
+}
+
+.risk-high {
+    background:#dc3545;
+    color:white;
+}
+
+.risk-medium {
+    background:#ffc107;
+    color:black;
+}
+
+.risk-low {
+    background:#198754;
+    color:white;
+}

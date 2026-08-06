@@ -248,6 +248,16 @@ def home():
         )
 
     return render_template("index.html")
+@app.route("/history")
+def history():
+
+    with open("history.json", "r") as file:
+        scans = json.load(file)
+
+    return render_template(
+        "history.html",
+        scans=scans
+    )
 @app.route("/download-report")
 def download_report():
 

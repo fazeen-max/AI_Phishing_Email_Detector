@@ -12,5 +12,47 @@
         "risk": "HIGH",
         "score": 100,
         "threats": 8
+    },
+    {
+        "time": "2026-08-05 21:37:24",
+        "sender": "security@github.com",
+        "risk": "HIGH",
+        "score": 100,
+        "threats": 8
+    },
+    {
+        "time": "2026-08-05 21:40:57",
+        "sender": "support@paypaI.com",
+        "risk": "HIGH",
+        "score": 100,
+        "threats": 8
+    },
+    {
+        "time": "2026-08-05 21:43:51",
+        "sender": "support@paypaI.com",
+        "risk": "HIGH",
+        "score": 100,
+        "threats": 8
+    },
+    {
+        "time": "2026-08-05 21:47:09",
+        "sender": "john.smith@company.com",
+        "risk": "HIGH",
+        "score": 100,
+        "threats": 8
+    },
+    {
+        "time": "2026-08-05 21:49:48",
+        "sender": "john.smith@company.com",
+        "risk": "HIGH",
+        "score": 100,
+        "threats": 8
+    },
+    {
+        "time": "2026-08-05 21:54:07",
+        "sender": "security@github.com",
+        "risk": "HIGH",
+        "score": 100,
+        "threats": 7
     }
 ]
