@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,29 +32,63 @@
     <form method="POST" enctype="multipart/form-data">
 
         <label>📧 Sender Email</label>
-        <input type="text" name="sender" placeholder="example@gmail.com" required>
+        <input
+            type="text"
+            name="sender"
+            placeholder="example@gmail.com"
+            required>
 
         <label>📝 Email Subject</label>
-        <input type="text" name="subject" placeholder="Enter email subject" required>
+        <input
+            type="text"
+            name="subject"
+            placeholder="Enter email subject"
+            required>
 
         <label>📄 Email Content</label>
-<textarea
-    name="email"
-    rows="8"
-    placeholder="Paste the email message here..."
-    required></textarea>
-   <label>📨 Email Header (Optional)</label>
-<textarea
-    name="header"
-    rows="6"
-    placeholder="Paste the email header here (optional)..."
-></textarea>
 
-<label>📁 Upload .eml Email File (Optional)</label>
-<input
-    type="file"
-    name="email_file"
-    accept=".eml"
->
+        <textarea
+            name="email"
+            rows="8"
+            placeholder="Paste the email message here..."
+            required></textarea>
 
-<button type="submit">🔍 Analyze Email</button>
+        <label>📨 Email Header (Optional)</label>
+
+        <textarea
+            name="header"
+            rows="6"
+            placeholder="Paste the email header here (optional)..."></textarea>
+
+        <label>📁 Upload .eml Email File (Optional)</label>
+
+        <input
+            type="file"
+            name="email_file"
+            accept=".eml">
+            <br><br>
+
+        <button type="submit">🔍 Analyze Email</button>
+
+        <br><br>
+
+        <a href="/history">
+            <button type="button">📜 View Scan History</button>
+        </a>
+
+        <br><br>
+
+        <a href="/dashboard">
+            <button type="button">📊 View Statistics Dashboard</button>
+        </a>
+
+    </form>
+
+</div>
+
+<footer>
+    <p>© 2026 AI Phishing Email Detector | Developed using Flask & Python</p>
+</footer>
+
+</body>
+</html>
