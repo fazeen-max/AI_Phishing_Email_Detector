@@ -1,8 +1,19 @@
 from flask import Flask, render_template, request, send_file
 import re
+import json
 import time
+from datetime import datetime
 from pdf_report import generate_report
 app = Flask(__name__)
+def save_history(data):
+
+    with open("history.json", "r") as file:
+        history = json.load(file)
+
+    history.append(data)
+
+    with open("history.json", "w") as file:
+        json.dump(history, file, indent=4)
 @app.route("/", methods=["GET", "POST"])
 def home():
 
@@ -210,6 +221,14 @@ def home():
         # -----------------------------
         # Show Results
         # -----------------------------
+        # Save Scan History
+        save_history({
+            "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "sender": sender,
+            "risk": risk,
+            "score": score,
+            "threats": threat_count
+        })
         scan_time = round(time.time() - start_time, 3)
 
         return render_template(

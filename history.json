@@ -1,0 +1,16 @@
+[
+    {
+        "time": "2026-08-05 21:30:06",
+        "sender": "security@github.com",
+        "risk": "LOW",
+        "score": 30,
+        "threats": 2
+    },
+    {
+        "time": "2026-08-05 21:31:06",
+        "sender": "security@github.com",
+        "risk": "HIGH",
+        "score": 100,
+        "threats": 8
+    }
+]
