@@ -81,6 +81,11 @@
         <a href="/dashboard">
             <button type="button">📊 View Statistics Dashboard</button>
         </a>
+        <br><br>
+
+<button type="button" id="theme-toggle">
+    🌙 Dark Mode
+</button>
 
     </form>
 
@@ -89,6 +94,19 @@
 <footer>
     <p>© 2026 AI Phishing Email Detector | Developed using Flask & Python</p>
 </footer>
+<script>
+const toggleButton = document.getElementById("theme-toggle");
+
+toggleButton.addEventListener("click", function () {
+    document.body.classList.toggle("dark-mode");
+
+    if (document.body.classList.contains("dark-mode")) {
+        toggleButton.innerHTML = "☀️ Light Mode";
+    } else {
+        toggleButton.innerHTML = "🌙 Dark Mode";
+    }
+});
+</script>
 
 </body>
 </html>

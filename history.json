@@ -82,5 +82,19 @@
         "risk": "LOW",
         "score": 10,
         "threats": 1
+    },
+    {
+        "time": "2026-08-06 04:47:36",
+        "sender": "john.smith@company.com",
+        "risk": "HIGH",
+        "score": 100,
+        "threats": 8
+    },
+    {
+        "time": "2026-08-06 04:47:55",
+        "sender": "john.smith@company.com",
+        "risk": "HIGH",
+        "score": 100,
+        "threats": 8
     }
 ]
