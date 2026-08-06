@@ -1,18 +1,27 @@
 from flask import Flask, render_template, request, send_file
 import re
 from pdf_report import generate_report
-
 app = Flask(__name__)
-
 @app.route("/", methods=["GET", "POST"])
 def home():
 
     if request.method == "POST":
 
-        sender = request.form["sender"]
-        subject = request.form["subject"]
-        email = request.form["email"]
+        # -----------------------------
+        # Get Form Data
+        # -----------------------------
+        sender = request.form.get("sender", "")
+        subject = request.form.get("subject", "")
+        email = request.form.get("email", "")
         header = request.form.get("header", "")
+
+        # -----------------------------
+        # Upload .eml File
+        # -----------------------------
+        email_file = request.files.get("email_file")
+
+        if email_file and email_file.filename.endswith(".eml"):
+            email = email_file.read().decode("utf-8", errors="ignore")
 
         # -----------------------------
         # Email Statistics
@@ -37,34 +46,40 @@ def home():
             "linkedin.com",
             "facebook.com"
         ]
+
         url_results = []
 
         for url in urls:
-            if "bit.ly" in url or "tinyurl.com" in url or "t.co" in url:
+
+            if any(short in url for short in ["bit.ly", "tinyurl.com", "t.co"]):
                 url_results.append((url, "🔴 High Risk - Shortened URL"))
+
             elif any(domain in url for domain in trusted_domains):
                 url_results.append((url, "🟢 Trusted Domain"))
+
             else:
                 url_results.append((url, "🟡 Unknown or Suspicious Domain"))
 
+        # -----------------------------
+        # Initialize Variables
+        # -----------------------------
         sender_lower = sender.lower()
 
         score = 0
         risk = "LOW"
         reasons = []
         threat_count = 0
-
+        header_results = []
         # -----------------------------
         # Email Header Analysis
         # -----------------------------
-        header_results = []
-
         if header:
 
             if "spf: fail" in header.lower():
                 header_results.append("❌ SPF Authentication Failed")
                 score += 15
                 threat_count += 1
+
             elif "spf: pass" in header.lower():
                 header_results.append("✅ SPF Passed")
 
@@ -72,6 +87,7 @@ def home():
                 header_results.append("❌ DKIM Authentication Failed")
                 score += 15
                 threat_count += 1
+
             elif "dkim: pass" in header.lower():
                 header_results.append("✅ DKIM Passed")
 
@@ -79,6 +95,7 @@ def home():
                 header_results.append("❌ DMARC Authentication Failed")
                 score += 15
                 threat_count += 1
+
             elif "dmarc: pass" in header.lower():
                 header_results.append("✅ DMARC Passed")
 
@@ -86,7 +103,10 @@ def home():
 
             if ip_match:
                 header_results.append(f"🌍 Sender IP: {ip_match.group()}")
-                # Detect suspicious senders
+
+        # -----------------------------
+        # Sender Analysis
+        # -----------------------------
         if (
             "gmail.com" in sender_lower
             or "yahoo.com" in sender_lower
@@ -102,47 +122,60 @@ def home():
             or "bank" in sender_lower
         ):
             score += 20
-            reasons.append("⚠ Sender impersonates a trusted organization")
+            reasons.append("⚠ Sender may impersonate a trusted organization")
             threat_count += 1
 
-        # Detect phishing keywords
-        if "password" in email.lower():
-            score += 25
-            reasons.append("⚠ Requests your password")
-            threat_count += 1
+        # -----------------------------
+        # Email Content Analysis
+        # -----------------------------
+        phishing_keywords = {
+            "password": 25,
+            "otp": 25,
+            "urgent": 20,
+            "verify": 15,
+            "login": 15,
+            "account": 10,
+            "click here": 20,
+            "confirm": 10,
+            "gift": 15,
+            "winner": 15,
+            "bank": 20
+        }
 
-        if "otp" in email.lower():
-            score += 25
-            reasons.append("⚠ Requests OTP")
-            threat_count += 1
+        email_lower = email.lower()
+        subject_lower = subject.lower()
 
-        if "urgent" in subject.lower():
-            score += 20
-            reasons.append("⚠ Uses urgent language")
-            threat_count += 1
+        for keyword, points in phishing_keywords.items():
 
-        if "bit.ly" in email.lower():
-            score += 30
-            reasons.append("⚠ Contains a shortened suspicious link")
-            threat_count += 1
+            if keyword in email_lower or keyword in subject_lower:
+                score += points
+                threat_count += 1
+                reasons.append(f"⚠ Suspicious keyword detected: {keyword}")
+                # -----------------------------
+        # Detect Dangerous Attachments
+        # -----------------------------
+        dangerous_extensions = [".exe", ".zip", ".rar", ".js", ".bat", ".scr"]
 
-        # Detect dangerous attachments
-        attachments = [".exe", ".zip", ".rar", ".js", ".bat", ".scr"]
-
-        for file in attachments:
-            if file in email.lower():
+        for ext in dangerous_extensions:
+            if ext in email.lower():
                 attachment_count += 1
                 score += 20
-                reasons.append(f"📎 Dangerous attachment detected: {file}")
                 threat_count += 1
+                reasons.append(f"📎 Dangerous attachment detected: {ext}")
 
-        # Decide risk level
+        # -----------------------------
+        # Decide Risk Level
+        # -----------------------------
         if score >= 70:
             risk = "HIGH"
         elif score >= 35:
             risk = "MEDIUM"
+        else:
+            risk = "LOW"
 
-        # Security recommendation
+        # -----------------------------
+        # AI Recommendation
+        # -----------------------------
         if risk == "HIGH":
             recommendation = (
                 "❌ Do NOT click any links or download attachments. "
@@ -158,6 +191,9 @@ def home():
                 "before sharing sensitive information."
             )
 
+        # -----------------------------
+        # Show Results
+        # -----------------------------
         return render_template(
             "result.html",
             risk=risk,
@@ -200,7 +236,5 @@ def download_report():
     )
 
     return send_file(filename, as_attachment=True)
-
-
 if __name__ == "__main__":
     app.run(debug=True)
