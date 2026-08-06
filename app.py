@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, send_file
 import re
+import time
 from pdf_report import generate_report
 app = Flask(__name__)
 @app.route("/", methods=["GET", "POST"])
 def home():
 
     if request.method == "POST":
+        start_time = time.time()
 
         # -----------------------------
         # Get Form Data
@@ -190,10 +192,12 @@ def home():
                 "✅ This email appears relatively safe, but always verify the sender "
                 "before sharing sensitive information."
             )
+            
 
         # -----------------------------
         # Show Results
         # -----------------------------
+        scan_time = round(time.time() - start_time, 3)
         return render_template(
             "result.html",
             risk=risk,
@@ -206,6 +210,7 @@ def home():
             url_results=url_results,
             threat_count=threat_count,
             header_results=header_results,
+            scan_time=scan_time,
         )
 
     return render_template("index.html")
