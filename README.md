@@ -54,7 +54,7 @@ An intelligent web application built using **Python** and **Flask** that analyze
 
 ### 📋 Scan History
 
-![Scan History](screenshots/scan history.png)
+![Scan History](screenshots/scanhistory.png)
 
 ---
 
