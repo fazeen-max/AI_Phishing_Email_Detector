@@ -96,5 +96,12 @@
         "risk": "HIGH",
         "score": 100,
         "threats": 8
+    },
+    {
+        "time": "2026-08-06 20:25:51",
+        "sender": "security@github.com",
+        "risk": "LOW",
+        "score": 10,
+        "threats": 1
     }
 ]
